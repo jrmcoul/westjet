@@ -73,9 +73,14 @@ const url = 'https://www.westjet.com/booking/Create.html?lang=en&type=search&ori
 	await page.select('#adult-1-title', 'MR');
 	await page.type('#adult-1-firstName', 'John');
 	await page.type('#adult-1-lastName', 'Doe');
-	await page.select('#adult-1-day', '1');
-	await page.select('#adult-1-month', '1');
-	await page.select('#adult-1-year', '1990');
+
+	// Fixing bug for canadian flights
+	if (await page.$('#adult-1-day') !== null) {
+		await page.select('#adult-1-day', '1');
+		await page.select('#adult-1-month', '1');
+		await page.select('#adult-1-year', '1990');
+	}
+
 	await page.type('#phone', '9142731111');
 	await page.type('#email', 'john.doe@gmail.com');
 	await page.click("#continue")
